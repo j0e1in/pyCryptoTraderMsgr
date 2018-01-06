@@ -1,0 +1,25 @@
+{
+  "name": "tradercomm",
+  "version": "1.0.0",
+  "description": "## API",
+  "main": "server.js",
+  "dependencies": {
+    "bootbot": "^1.0.14",
+    "dotenv": "^4.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CWaYNe/TraderComm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CWaYNe/TraderComm/issues"
+  },
+  "homepage": "https://github.com/CWaYNe/TraderComm#readme"
+}
