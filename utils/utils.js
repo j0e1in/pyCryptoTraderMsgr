@@ -3,7 +3,7 @@
 const { logger } = require('./logger');
 const fs = require('fs');
 const speakeasy = require('speakeasy');
-const AccountData = JSON.parse(fs.readFileSync('account.json', 'utf8'));
+const AccountData = JSON.parse(fs.readFileSync('private/account.json', 'utf8'));
 
 
 const checkRequestMiddleware = (req, res, next) => {
@@ -15,8 +15,8 @@ const checkRequestMiddleware = (req, res, next) => {
 }
 
 
-const setTraderDefaultExchange = ( fb_user_id, exchange ) => {
-    if ( AccountData['accounts'][fb_user_id] !== undefined &&
+const setTraderDefaultExchange = (fb_user_id, exchange) => {
+    if (AccountData['accounts'][fb_user_id] !== undefined &&
         AccountData['accounts'][fb_user_id].default_exchange !== exchange
     ) {
         AccountData['accounts'][fb_user_id].default_exchange = exchange;
@@ -26,12 +26,12 @@ const setTraderDefaultExchange = ( fb_user_id, exchange ) => {
 
 
 const writeToAccount = () => {
-    fs.writeFileSync('account.json', JSON.stringify(AccountData), 'utf8');
+    fs.writeFileSync('private/account.json', JSON.stringify(AccountData), 'utf8');
 }
 
 
 const twoFactorAuthentication = (convo, cb) => {
-    convo.say(`Further action require authy authentication!`).then(()=> cb(convo));
+    convo.say(`Further action require authy authentication!`).then(() => cb(convo));
 }
 
 
@@ -44,64 +44,64 @@ const chatSay = (msg, promise, chat) => {
 
 const botSendTemplateWithOrder = (type, promise, elements, bot, user_id) => {
     let template;
-    switch (type){
+    switch (type) {
         case 'generic':
             template = {
                 "template_type": type,
                 "elements": elements
             }
-        break;
+            break;
         case 'list':
             template = {
                 "template_type": 'list',
                 "top_element_style": "compact",
                 "elements": elements
             }
-        break;
+            break;
         case 'msg':
         default:
             if (!promise)
                 return bot.say(user_id, elements);
             else
-                return promise.then( () => bot.say(user_id, elements) )        
-        break;
+                return promise.then(() => bot.say(user_id, elements))
+            break;
     }
 
     if (!promise)
         return bot.sendTemplate(user_id, template);
     else
-        return promise.then( () => bot.sendTemplate(user_id, template) )
+        return promise.then(() => bot.sendTemplate(user_id, template))
 }
 
 const chatSendTemplateWithOrder = (type, promise, elements, chat) => {
     let template;
-    switch (type){
+    switch (type) {
         case 'generic':
             template = {
                 "template_type": type,
                 "elements": elements
             }
-        break;
+            break;
         case 'list':
             template = {
                 "template_type": 'list',
                 "top_element_style": "compact",
                 "elements": elements,
             }
-        break;
+            break;
         case 'msg':
         default:
             if (!promise)
                 return chat.say(elements);
             else
-                return promise.then( () => chat.say(elements) )        
-        break;
+                return promise.then(() => chat.say(elements))
+            break;
     }
 
     if (!promise)
         return chat.sendTemplate(template);
     else
-        return promise.then( () => chat.sendTemplate(template) )
+        return promise.then(() => chat.sendTemplate(template))
 }
 
 

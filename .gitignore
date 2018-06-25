@@ -1,8 +1,7 @@
 node_modules/
+private/
 .git/
 .vscode/
 
 .env
 *.log
-
-account.json
