@@ -1,3 +1,8 @@
-node_modules/*
-.git/*
+node_modules/
+.git/
+.vscode/
+
 .env
+*.log
+
+account.json

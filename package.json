@@ -4,8 +4,15 @@
   "description": "## API",
   "main": "server.js",
   "dependencies": {
+    "axios": "^0.17.1",
     "bootbot": "^1.0.14",
-    "dotenv": "^4.0.0"
+    "dotenv": "^4.0.0",
+    "express": "^4.16.3",
+    "mathjs": "^4.0.0",
+    "moment": "^2.21.0",
+    "moment-timezone": "^0.5.14",
+    "speakeasy": "^2.0.0",
+    "winston": "^3.0.0-rc2"
   },
   "devDependencies": {},
   "scripts": {
