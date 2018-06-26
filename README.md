@@ -20,7 +20,7 @@ Facebook messenger client for pyCryptoTrader.
 
 # Required Directoy Configuration
 
-In order to excute properly, following non-commited directory / files configuration is stricyly required.
+In order to excute properly, following non-commited directory and file configuration is strictly required.
 
 ```
 ├── log       <= permission must set to 777
