@@ -1,8 +1,6 @@
 'use strict'
 
 const BootBot = require('bootbot')
-const { logger } = require('../../utils/logger')
-const { inspect } = require('util')
 
 // Stock watcher modules
 const stockWatcherMenu = require('../services/stock_watcher/generalAccess').persistentMenuElements
@@ -11,6 +9,7 @@ const stockWatcherMenu = require('../services/stock_watcher/generalAccess').pers
 const getStartedProcess = require('../services/crypto_trader/getStartedProcess').module
 const authAccessModule = require('../services/crypto_trader/authAccess').module
 const generalAccessModule = require('../services/crypto_trader/generalAccess').module
+const logger = require('../logger')
 
 class PageBot {
   constructor(
@@ -63,7 +62,8 @@ class PageBot {
   }
 
   notify(username, notify_type, data) {
-    console.log(`Notifying ${username} - ${this.user_lists[username].uid}`)
+    // purpose ???
+    logger.debug(`Notifying ${username} - ${this.user_lists[username].uid}`)
   }
 
   broadcast(msg, level = 0) {
@@ -121,12 +121,7 @@ class PageBot {
       } else if (this.botPersistentMenu.length + servicePersistentMenu.length < 4) {
         this.botPersistentMenu = this.botPersistentMenu.concat(servicePersistentMenu)
       } else {
-        logger.log({
-          level: 'error',
-          message: `Must not bind more than 3 persistent menu on the top level! Page name:${
-            this.name
-          }`
-        })
+        logger.error(`Must not bind more than 3 persistent menu on the top level! Page name:${this.name}`)
       }
     })
 

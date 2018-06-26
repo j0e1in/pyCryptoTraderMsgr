@@ -1,9 +1,10 @@
 {
-  "name": "tradercomm",
+  "name": "pycryptotradermsgr",
   "version": "1.0.0",
   "description": "## API",
   "main": "server.js",
   "dependencies": {
+    "argparse": "^1.0.10",
     "axios": "^0.17.1",
     "bootbot": "^1.0.14",
     "dotenv": "^4.0.0",
@@ -21,12 +22,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CWaYNe/TraderComm.git"
+    "url": "git+https://github.com/j0e1in/pyCryptoTraderMsgr.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CWaYNe/TraderComm/issues"
+    "url": "https://github.com/j0e1in/pyCryptoTraderMsgr/issues"
   },
-  "homepage": "https://github.com/CWaYNe/TraderComm#readme"
+  "homepage": "https://github.com/j0e1in/pyCryptoTraderMsgr#readme"
 }

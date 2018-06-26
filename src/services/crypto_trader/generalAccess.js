@@ -7,9 +7,10 @@ const {
   chatSay,
   chatSendTemplateWithOrder,
   setTraderDefaultExchange
-} = require('../../../utils/utils')
+} = require('../../utils')
+const logger = require('../../logger')
 
-const { getActiveMarkets, getActivePositions } = require('./utils/trader_data')
+const { getActiveMarkets, getActivePositions } = require('./trader_data')
 
 const trader_url = process.env.TRADER_URL
 const trader_port = process.env.TRADER_PORT
@@ -113,10 +114,7 @@ module.exports.module = (bot, userlists) => {
     if (userinfo) {
       cb(userinfo)
     } else {
-      logger.log({
-        level: 'warn',
-        message: `Non trader user: User=(${fb_user_id})`
-      })
+      logger.warn(`Non trader user: User=(${fb_user_id})`)
     }
   }
 
@@ -565,7 +563,7 @@ ${moment(e.timestamp).format('M/D h:mm:ss a')}
           if (!hasElement) chat.say('No balance')
         })
         .catch(function(error) {
-          console.log(error)
+          logger.error(error)
           chat.say(`Error occurred! Msg: ${error}`)
         })
     })

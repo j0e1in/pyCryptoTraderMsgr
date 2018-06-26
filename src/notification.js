@@ -3,13 +3,11 @@
 const axios = require('axios')
 const math = require('mathjs')
 const moment = require('moment')
-const { logger } = require('../utils/logger')
-const { inspect } = require('util')
+const logger = require('./logger')
 const {
   botSendTemplateWithOrder,
   checkRequestMiddleware,
-  twoFactorAuthentication
-} = require('../utils/utils')
+} = require('./utils')
 
 const trader_url = process.env.TRADER_URL
 const trader_port = process.env.TRADER_PORT
@@ -33,12 +31,9 @@ module.exports.module = (pageManager, app, bots, userlists, broadcast) => {
       return next()
     }
 
-    logger.log({
-      level: 'warn',
-      message: `Error notification endpoint: URL=(${req.originalUrl}), IP=(${req.ip}), UID=(${
-        req.params.username
-      })`
-    })
+    logger.warn(`Error notification endpoint: URL=(${req.originalUrl}),
+                 IP=(${req.ip}), UID=(${req.params.username})`)
+
     return res.status(404).json({
       ok: false,
       msg: `Error user id provided: ${req.params.userid}`
@@ -60,13 +55,11 @@ module.exports.module = (pageManager, app, bots, userlists, broadcast) => {
           cannotPing = false
           broadcast.call(pageManager, `[SERVER][INFO] Trader back online!`)
         }
-        console.log('server responded, all normal')
+        logger.debug('Ping trader server succeeded')
       })
       .catch(error => {
-        logger.log({
-          level: 'error',
-          message: `Cannot ping ${trader_url}:${trader_port}`
-        })
+        logger.error(`Cannot ping ${trader_url}:${trader_port}`)
+
         // only notify user once after failing to ping
         if (!cannotPing) broadcast.call(pageManager, `[SERVER][ERROR] Cannot ping trader!`)
         cannotPing = true
@@ -194,18 +187,18 @@ Price: ${math.format(e.price, { precision: 4, lowerExp: -6 })}\n
   )
 
   // app.post("/notification/order/cancel/:username", [checkRequestMiddleware, checkUserMiddleware], (req, res) =>  {
-  //   bots[req.page_id].say(req.fb_user_id, "Order open");
+  //   bots[req.page_id].say(req.fb_user_id, "Order open")
   //   res.json({
   //     "ok": true
   //   })
-  // });
+  // })
 
   // app.post("/notification/position/close/:username", [checkRequestMiddleware, checkUserMiddleware], (req, res) =>  {
-  //   bots[req.page_id].say(req.fb_user_id, "Order open");
+  //   bots[req.page_id].say(req.fb_user_id, "Order open")
   //   res.json({
   //     "ok": true
   //   })
-  // });
+  // })
 
   app.post(
     '/notification/position/danger/:username',

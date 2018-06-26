@@ -4,7 +4,7 @@ const axios = require('axios')
 const math = require('mathjs')
 const moment = require('moment')
 const { inspect } = require('util')
-const { chatSendTemplateWithOrder, setTraderDefaultExchange } = require('../../../utils/utils')
+const logger = require('../../logger')
 
 const trader_url = process.env.TRADER_URL
 const trader_port = process.env.TRADER_PORT
@@ -111,7 +111,7 @@ module.exports.module = bot => {
               }
             )
             .then(function(response) {
-              console.log(response)
+              logger.debug(response)
               if (!response.data.error)
                 convo.say(`Trader user created!\nInitial setup completed!`).then(() => {
                   convo.end()
@@ -126,7 +126,7 @@ module.exports.module = bot => {
                   })
             })
             .catch(function(error) {
-              console.log(error)
+              logger.error(error)
               convo.say(`Some error happened! Conversation ended!`)
               convo.end()
             })
@@ -203,7 +203,7 @@ module.exports.module = bot => {
             }
           )
           .then(function(response) {
-            console.log(response)
+            logger.debug(response)
             if (!response.data.error)
               convo.say(`Authy created!\nRegistering trading info`).then(() => {
                 askTraderExchange(convo)
@@ -218,7 +218,7 @@ module.exports.module = bot => {
                 })
           })
           .catch(function(error) {
-            console.log(error)
+            logger.error(error)
             convo.say(`Some error happened! Conversation ended!`)
             convo.end()
           })

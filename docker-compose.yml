@@ -1,0 +1,10 @@
+# For building and pushing image
+version: '3.5'
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    image: gcr.io/docker-reghub/pyct-msgr
+    deploy:
+      replicas: 0

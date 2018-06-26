@@ -2,17 +2,41 @@
 
 require('dotenv').config()
 const moment = require('moment-timezone')
-const BootBot = require('bootbot')
-const { logger } = require('./utils/logger')
 const express = require('express')
 const bodyParser = require('body-parser')
 const https = require('https')
 const fs = require('fs')
 const crypto = require('crypto')
+const ArgumentParser = require('argparse').ArgumentParser
+const { absolutePath } = require('./src/utils')
+const logger = require('./src/logger')
+
+const parseArgs = () => {
+  const parser = new ArgumentParser()
+
+  parser.addArgument(['--port', '-p'], {
+    'defaultValue': 443,
+    'help': 'Server port'
+  })
+
+  parser.addArgument(['--root'], {
+    'defaultValue': __dirname,
+    'help': 'Project root directory absolute path'
+  })
+
+  return parser.parseArgs(process.argv.slice(2))
+}
+
+const argv = parseArgs()
+
+// Change some file path to absolute path
+process.env.ACCOUNT_CREDENTIAL = absolutePath(process.env.ACCOUNT_CREDENTIAL, argv.root)
+process.env.HTTPS_PRIVATE_KEY = absolutePath(process.env.HTTPS_PRIVATE_KEY, argv.root)
+process.env.HTTPS_CERTIFICATE = absolutePath(process.env.HTTPS_CERTIFICATE, argv.root)
 
 const app = express()
 const PagesManager = require('./src/account/PagesManager')
-const pagesData = JSON.parse(fs.readFileSync('private/account.json', 'utf8')).pages
+const pagesData = JSON.parse(fs.readFileSync(process.env.ACCOUNT_CREDENTIAL, 'utf8')).pages
 
 const verifyRequestSignature = (providedHash, buf) => {
   for (let page_id in pagesData) {
@@ -42,9 +66,9 @@ const _verifyRequestSignature = (req, res, buf) => {
 }
 
 app.use(bodyParser.json({ verify: _verifyRequestSignature }))
-app.set('port', process.env.SERVER_PORT || 3000)
+app.set('port', argv.port || 3000)
 
-const Bots = new PagesManager('private/account.json', app)
+const Bots = new PagesManager(process.env.ACCOUNT_CREDENTIAL, app)
 
 moment.tz.setDefault('Asia/Taipei')
 
@@ -62,7 +86,7 @@ app.get('/webhook', (req, res) => {
     req.query['hub.mode'] === 'subscribe' &&
     Bots.webhookValidation(req.query['hub.verify_token'])
   ) {
-    console.log('Validation Succeded.')
+    logger.info('Validation Succeded.')
     res.status(200).send(req.query['hub.challenge'])
   } else {
     console.error('Failed validation. Make sure the validation tokens match.')
@@ -79,12 +103,7 @@ https
     app
   )
   .listen(app.get('port'), () => {
-    console.log(`Boot bot running on port ${app.get('port')}`)
+    logger.info(`Messenger bot running on port ${app.get('port')}`)
   })
 
-Bots.broadcast('[SERVER][INFO] Server starting up!', process.env.ENVIRONMENT)
-
-logger.log({
-  level: 'info',
-  message: 'Starting the traddercomm server...'
-})
+Bots.broadcast('[SERVER][INFO] Messenger server starting up!', process.env.ENVIRONMENT)

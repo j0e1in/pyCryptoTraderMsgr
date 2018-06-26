@@ -2,7 +2,7 @@
 const axios = require('axios')
 const math = require('mathjs')
 const moment = require('moment')
-const { twoFactorAuthentication } = require('../utils/utils')
+const { twoFactorAuthentication } = require('./utils')
 
 /**
  * Authenticated Access
@@ -76,10 +76,7 @@ module.exports.module = (bot, userlists) => {
     if (userinfo) {
       cb(userinfo)
     } else {
-      logger.log({
-        level: 'warn',
-        message: `Non trader user: User=(${fb_user_id})`
-      })
+      logger.warn(`Non trader user: User=(${fb_user_id})`)
     }
   }
 

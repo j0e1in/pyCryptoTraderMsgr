@@ -6,10 +6,11 @@ const generalAccessModule = require('../generalAccess').module
 
 const generalAccessPersistentMenuElement = require('../generalAccess').persistentMenuElements
 const authAccessPersistentMenuElement = require('../authAccess').persistentMenuElements
+const logger = require('../logger')
 
 class PageBot {
   constructor(name, fb_app_secret, fb_access_token, fb_verify_token) {
-    console.log(`Constructing PageBot: ${name}`)
+    logger.debug(`Constructing PageBot: ${name}`)
     if (!name || !fb_app_secret || !fb_access_token || !fb_verify_token)
       throw new Error('missing arguments!')
 

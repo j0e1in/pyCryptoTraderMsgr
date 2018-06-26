@@ -3,11 +3,12 @@
 const axios = require('axios')
 const math = require('mathjs')
 const moment = require('moment')
-const { chatSay, chatSendTemplateWithOrder, setTraderDefaultExchange } = require('../utils/utils')
+const { chatSay, chatSendTemplateWithOrder, setTraderDefaultExchange } = require('./utils')
 
 const trader_url = process.env.TRADER_URL
 const trader_port = process.env.TRADER_PORT
 const trader_timeout = process.env.TRADER_REQUEST_TIMEOUT
+const logger = require('./logger')
 
 module.exports.persistentMenuElements = {
   title: 'Account',
@@ -105,10 +106,7 @@ module.exports.module = (bot, userlists) => {
     if (userinfo) {
       cb(userinfo)
     } else {
-      logger.log({
-        level: 'warn',
-        message: `Non trader user: User=(${fb_user_id})`
-      })
+      logger.warn(`Non trader user: User=(${fb_user_id})`)
     }
   }
 
@@ -584,7 +582,7 @@ ${moment(e.timestamp).format('M/D h:mm:ss a')}
           if (!hasElement) chat.say('No balance')
         })
         .catch(function(error) {
-          console.log(error)
+          logger.error(error)
           chat.say(`Error occurred! Msg: ${error}`)
         })
     })
