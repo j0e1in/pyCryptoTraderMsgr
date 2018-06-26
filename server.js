@@ -89,7 +89,7 @@ app.get('/webhook', (req, res) => {
     logger.info('Validation Succeded.')
     res.status(200).send(req.query['hub.challenge'])
   } else {
-    console.error('Failed validation. Make sure the validation tokens match.')
+    logger.error('Failed validation. Make sure the validation tokens match.')
     res.sendStatus(403)
   }
 })
