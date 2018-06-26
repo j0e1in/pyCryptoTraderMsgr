@@ -17,3 +17,19 @@ Facebook messenger client for pyCryptoTrader.
 - available options:
   - `--follow` | `-f`: follow docker service log after deployed
   - `--pull`: pull image from docker registry instead of build on server
+
+# Required Directoy Configuration
+
+In order to excute properly, following non-commited directory / files configuration is stricyly required.
+
+```
+├── log       <= permission must set to 777
+│   └── msgr  <= permission must set to 777
+└── proj_root
+    └── private
+        ├── account.json
+        ├── docker-reghub-0065a93a0ed4.json
+        └── ssl
+            ├── fullchain.pem
+            └── privkey.pem
+```
