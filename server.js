@@ -106,4 +106,4 @@ https
     logger.info(`Messenger bot running on port ${app.get('port')}`)
   })
 
-Bots.broadcast('[SERVER][INFO] Messenger server starting up!', process.env.ENVIRONMENT)
+Bots.broadcast('[SERVER][INFO] Messenger server starting up!', process.env.BOT_ADMIN_PERMISSION)
