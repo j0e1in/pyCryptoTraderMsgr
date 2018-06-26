@@ -1,9 +1,3 @@
-'use strict';
+'use strict'
 
-module.exports = (bot) => {
-
-    
-
-
-
-}
+module.exports = bot => {}

@@ -1,5 +1,3 @@
-# TraderComm
+# pyCryptoTraderMsgr
 
-## API
-
-## Roadmap
+Messenger client for pyCryptoTrader.
