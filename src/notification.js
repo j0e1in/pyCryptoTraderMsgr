@@ -79,10 +79,9 @@ module.exports.module = (pageManager, app, bots, userlists, broadcast) => {
       if (req.body.orders) {
         req.body.orders.forEach(e => {
           msg += `${e.exchange} - ${e.symbol} - ${e.type}
-${e.margin ? 'margin ' : ''} ${e.side}
-Amount: ${math.format(e.amount, { precision: 4, lowerExp: -6 })}
-Price: ${math.format(e.price, { precision: 4, lowerExp: -6 })}\n
-`
+          ${e.margin ? 'margin ' : ''} ${e.side}
+          Amount: ${math.format(e.amount, { precision: 4, lowerExp: -6 })}
+          Price: ${math.format(e.price, { precision: 4, lowerExp: -6 })}\n`
 
           if (++count >= 4) {
             promise = botSendTemplateWithOrder(
@@ -280,7 +279,7 @@ Price: ${math.format(e.price, { precision: 4, lowerExp: -6 })}\n
           elements.push({
             title: `Large PL - ${e.exchange} - ${e.symbol} - ${e.type} - ${e.side} ${
               e.margin ? '- Margin' : ''
-            }`,
+              }`,
             subtitle: `Amount: ${math.format(e.amount, {
               precision: 4,
               lowerExp: -6

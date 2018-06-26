@@ -1,3 +1,4 @@
+const appRoot = require('app-root-path')
 const moment  = require('moment-timezone')
 const { createLogger, format, transports } = require('winston')
 
@@ -7,6 +8,7 @@ const fmt = format.printf(info => {
 })
 
 moment.tz.setDefault('Asia/Taipei')
+time = moment().format("YYYY-MM-DD_HH:mm:ss")
 
 const logger = createLogger({
     level: 'debug',
@@ -14,7 +16,7 @@ const logger = createLogger({
     transports: [
         new transports.Console(),
         new transports.File({
-            filename: '../log/msgr/bot.log',
+            filename: `${appRoot}/../log/msgr/bot-${time}.log`,
         })
     ]
 })

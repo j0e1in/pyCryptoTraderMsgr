@@ -4,6 +4,7 @@
   "description": "## API",
   "main": "server.js",
   "dependencies": {
+    "app-root-path": "^2.1.0",
     "argparse": "^1.0.10",
     "axios": "^0.17.1",
     "bootbot": "^1.0.14",

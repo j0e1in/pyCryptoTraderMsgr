@@ -103,7 +103,7 @@ ssh $USERNAME@$HOST \
   sleep 20 && \
   \
   docker stack deploy -c $DOCKER_DIR/$STACK_FILE $STACK_NAME && \
-  echo \"wait for 20 seconds...\" && \
-  sleep 20 && \
+  echo \"wait for 10 seconds...\" && \
+  sleep 10 && \
   \
   $TAIL_LOG"

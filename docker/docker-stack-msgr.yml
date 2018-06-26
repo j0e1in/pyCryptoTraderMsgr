@@ -9,7 +9,7 @@ services:
     volumes:
       - ../../log:/log
     ports:
-      - "3000:443"
+      - "443:3000"
     secrets:
       - source: account.json
         target: /app/private/account.json
