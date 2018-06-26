@@ -33,3 +33,8 @@ In order to excute properly, following non-commited directory and file configura
             ├── fullchain.pem
             └── privkey.pem
 ```
+
+# Setup Cloud VM
+
+- GCP: When creating vm, in `Management` > `Metadata`, add a key-value pair as such: `user-data` - `[cloud-config.yml content]`
+- DigitalOcean: When creating vm, copy content in cloud-config.yml to `user-data`
